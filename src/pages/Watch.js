@@ -26,7 +26,12 @@ const Watch = ({ socket }) => {
 
         const video = document.querySelector("video");
 
-        var socket = io.connect('localhost:4000', { reconnect: true });
+        if (window.location.host.includes("localhost")) {
+            var socket = io.connect('localhost:4000', { reconnect: true });
+        } else {
+            var socket = io.connect('https://web-stream-backend.herokuapp.com/', { reconnect: true });
+        }
+
         socket.on("offer", (id, description) => {
             peerConnection = new RTCPeerConnection(config);
             peerConnection
