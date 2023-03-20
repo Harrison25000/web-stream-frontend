@@ -1,7 +1,7 @@
 .NavBar {
     position: relative;
     width: 100%;
-    height: 100px;
+    height: 75px;
     background: lightgrey;
     margin: 0;
     display: flex;

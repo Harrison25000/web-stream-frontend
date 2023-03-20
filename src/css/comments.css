@@ -16,6 +16,10 @@
     border-radius: 5px;
 }
 
+#commentTitle {
+    text-align: left;
+}
+
 #commentForm {
     display: flex;
     flex-direction: column;

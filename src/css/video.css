@@ -1,16 +1,15 @@
 #videoStream {
-    width: 75%;
+    width: 100%;
     border: solid red;
 }
 
 .VideoButtons {
     width: 100%;
-    position: absolute;
+    position: relative;
     display: flex;
     z-index: 2;
-    bottom: 2%;
     text-align: center;
-    justify-content: center;
+    justify-content: flex-start;
 }
 
 .Button {
@@ -29,6 +28,37 @@
     width: 100%;
 }
 
+.WatchVideoSubSection {
+    width: 70%;
+    margin-left: 5%;
+}
+
 .CommentVideoSection {
     width: 50%;
+}
+
+#numberOfViewers {
+    width: 100%;
+    display: block;
+    margin: auto;
+}
+
+
+@media (max-width:960px) {
+    .WatchVideoSubSection {
+        margin-left: 5%;
+        margin-right: 5%;
+        width: auto;
+    }
+
+    .CommentVideoSection {
+        margin-left: 5%;
+        margin-right: 5%;
+        width: 100%;
+    }
+
+    .CommentSection {
+        width: 84% !important;
+        margin-top: 2%;
+    }
 }

@@ -149,23 +149,25 @@ const Broadcast = () => {
     return (
         <>
             <div className='BroadcastPageTitleDiv'>
-                <p id='broadcastTitleText'>Broadcast Page</p>
-                <p id='broadcastTitleCount'> Number of viewers: {numberOfWatchers}</p>
-            </div>
-            <div className="BroadcastAVSelections">
-                <section className="select">
-                    <label for="audioSource">Audio source: </label>
-                    <select id="audioSource"></select>
-                </section>
-
-                <section className="select">
-                    <label htmlFor="videoSource">Video source: </label>
-                    <select id="videoSource"></select>
-                </section>
+                <p id='broadcastTitleText'>Broadcast</p>
             </div>
             <div className="BroadcastPage">
                 <div className="WatchVideoSection">
-                    <video id="videoStream" playsInline autoPlay muted></video>
+                    <div className="WatchVideoSubSection">
+                        <video id="videoStream" playsInline autoPlay muted></video>
+                        <div className="BroadcastAVSelections">
+                            <section className="select">
+                                <label for="audioSource">Audio source: </label>
+                                <select id="audioSource"></select>
+                            </section>
+
+                            <section className="select">
+                                <label htmlFor="videoSource">Video source: </label>
+                                <select id="videoSource"></select>
+                            </section>
+                        </div>
+                        <p id='numberOfViewers' style={{ textAlign: "left" }}> Number of viewers: {numberOfWatchers}</p>
+                    </div>
                 </div>
                 <div className='CommentVideoSection'>
                     <Comments />

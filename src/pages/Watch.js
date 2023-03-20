@@ -3,11 +3,13 @@ import { getNumberOfwatchers, getSocket, addWatcher, removeWatcher, getComments 
 import '../css/watch.css';
 import '../css/video.css';
 import Comments from '../components/Comments';
+import watchMessage from '../images/watchMessage.png';
 
 const Watch = () => {
 
     const [startWatching, setStartWatching] = useState(false);
     const [numberOfWatchers, setNumberOfWatchers] = useState(0);
+    const [availableBroadcast, setAvailableBroadcast] = useState(false);
 
     useEffect(() => {
         getNumberOfwatchers().then(count => setNumberOfWatchers(count));
@@ -46,6 +48,7 @@ const Watch = () => {
                     socket.emit("answer", id, peerConnection.localDescription);
                 });
             peerConnection.ontrack = event => {
+                setAvailableBroadcast(true);
                 video.srcObject = event.streams[0];
                 video.play();
             };
@@ -72,9 +75,11 @@ const Watch = () => {
         });
 
         window.onunload = window.onbeforeunload = () => {
-            socket.close();
-            peerConnection.close();
-            removeWatcher();
+            if (startWatching) {
+                socket?.close();
+                peerConnection?.close();
+                removeWatcher();
+            }
         };
 
         if (!startWatching) {
@@ -97,37 +102,39 @@ const Watch = () => {
     return (
         <>
             <div className='WatchPageTitleDiv'>
-                <p id='watchTitleText'>Watch Page</p>
-                <p id='watchTitleCount'> Number of viewers: {numberOfWatchers}</p>
+                <p id='watchTitleText'>Watch</p>
             </div>
             <div className="WatchPage">
                 <div className='WatchVideoSection'>
-                    <video id="videoStream" playsInline autoPlay>
-                    </video>
-                    <div className='VideoButtons'>
-                        <button
-                            onClick={() => {
-                                if (!startWatching) {
-                                    addWatcher();
-                                    setNumberOfWatchers(numberOfWatchers + 1)
-                                    setStartWatching(true)
-                                }
-                            }}
-                            className="Button"
-                        >
-                            <p id="playButtonText">&#8895;</p>
-                        </button>
-                        <button
-                            onClick={() => {
-                                if (startWatching) {
-                                    removeWatcher();
-                                    setNumberOfWatchers(numberOfWatchers - 1)
-                                    setStartWatching(false)
-                                }
-                            }}
-                            className="Button"
-                        >II
-                        </button>
+                    <div className="WatchVideoSubSection">
+                        <video id="videoStream" poster={watchMessage} playsInline autoPlay>
+                        </video>
+                        <div className='VideoButtons'>
+                            <button
+                                onClick={() => {
+                                    if (!startWatching) {
+                                        addWatcher();
+                                        setNumberOfWatchers(numberOfWatchers + 1);
+                                        setStartWatching(true);
+                                    }
+                                }}
+                                className="Button"
+                            >
+                                <p id="playButtonText">&#8895;</p>
+                            </button>
+                            <button
+                                onClick={() => {
+                                    if (startWatching) {
+                                        removeWatcher();
+                                        setNumberOfWatchers(numberOfWatchers - 1);
+                                        setStartWatching(false);
+                                    }
+                                }}
+                                className="Button"
+                            >II
+                            </button>
+                            <p id='numberOfViewers' style={{ textAlign: "right" }}> Number of viewers: {numberOfWatchers}</p>
+                        </div>
                     </div>
                 </div>
                 <div className='CommentVideoSection'>

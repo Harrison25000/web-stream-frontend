@@ -11,10 +11,11 @@ const Comments = () => {
 
     setInterval(function () {
         getComments().then(comments => setComments(comments));
-    }, 10000)
+    }, 20000)
 
     return (
         <div className="CommentSection">
+            <p id="commentTitle">Comments</p>
             <form id="commentForm" onSubmit={(e) => submitComment(e)}>
                 <input type="text" id="commentText" />
                 <input type="submit" id="commentSubmit"></input>

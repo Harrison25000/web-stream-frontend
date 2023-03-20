@@ -10,12 +10,16 @@ export const getBackendUrl = () => {
 
 export const getComments = async () => {
     var comments = [];
-    await fetch(getBackendUrl() + 'getcomments', {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-    }).then(data => data.json()).then(item => comments.push(JSON.parse(item.comments)));
+    try {
+        await fetch(getBackendUrl() + 'getcomments', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        }).then(data => data.json()).then(item => comments.push(JSON.parse(item.comments)));
+    } catch (error) {
+        console.log(error);
+    }
     return comments.flatMap(data => data).reverse();
 }
 
