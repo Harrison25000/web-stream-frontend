@@ -1,0 +1,40 @@
+.CommentSection {
+    width: 80%;
+    border: solid black;
+    padding: 3%;
+    background: aliceblue;
+    border-radius: 10px;
+}
+
+.CommentDiv {
+    height: auto;
+    width: 100%;
+    color: black;
+    margin-top: 2%;
+    background: antiquewhite;
+    border: solid lightgray;
+    border-radius: 5px;
+}
+
+#commentForm {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: flex-start;
+}
+
+#commentText {
+    width: 100%;
+}
+
+#commentSubmit {
+    border-radius: 3px;
+    padding: 5px;
+    border: solid black;
+    margin-top: 2%;
+    cursor: pointer;
+}
+
+#commentSubmit:hover {
+    background: lightgrey;
+}

@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import { io } from "socket.io-client";
 import '../css/video.css';
 import '../css/broadcast.css';
 import { getNumberOfwatchers, getSocket } from '../Helpers';
+import Comments from '../components/Comments';
 
 const Broadcast = () => {
 
@@ -147,7 +147,7 @@ const Broadcast = () => {
     }
 
     return (
-        <div className="BroadcastPage">
+        <>
             <div className='BroadcastPageTitleDiv'>
                 <p id='broadcastTitleText'>Broadcast Page</p>
                 <p id='broadcastTitleCount'> Number of viewers: {numberOfWatchers}</p>
@@ -163,9 +163,15 @@ const Broadcast = () => {
                     <select id="videoSource"></select>
                 </section>
             </div>
-
-            <video id="videoStream" playsInline autoPlay muted></video>
-        </div>
+            <div className="BroadcastPage">
+                <div className="WatchVideoSection">
+                    <video id="videoStream" playsInline autoPlay muted></video>
+                </div>
+                <div className='CommentVideoSection'>
+                    <Comments />
+                </div>
+            </div>
+        </>
     )
 }
 

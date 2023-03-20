@@ -1,7 +1,22 @@
 import { io } from "socket.io-client";
 
 export const getBackendUrl = () => {
-    return "http://localhost:4000/"
+    if (window.location.host.includes("localhost")) {
+        return "http://localhost:4000/"
+    } else {
+        return "https://web-stream-backend.herokuapp.com/"
+    }
+}
+
+export const getComments = async () => {
+    var comments = [];
+    await fetch(getBackendUrl() + 'getcomments', {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    }).then(data => data.json()).then(item => comments.push(JSON.parse(item.comments)));
+    return comments.flatMap(data => data).reverse();
 }
 
 export const getNumberOfwatchers = async () => {
@@ -12,7 +27,6 @@ export const getNumberOfwatchers = async () => {
             'Content-Type': 'application/json',
         },
     }).then(data => data.json()).then(res => count = res.count);
-    console.log(count)
     return count;
 }
 
@@ -42,4 +56,16 @@ export const getSocket = async () => {
         socket = io.connect('https://web-stream-backend.herokuapp.com/', { reconnect: true });
     }
     return socket;
+}
+
+export const submitComment = async (e) => {
+    e.preventDefault();
+    const comment = e.target[0].value
+    await fetch(getBackendUrl() + 'savecomment', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ post: { comment } })
+    });
 }

@@ -15,4 +15,8 @@
 #navTitle {
     margin-left: 5%;
     cursor: pointer;
+    font-size: 40px;
+    text-decoration: none;
+    color: black;
+    font-weight: 600;
 }

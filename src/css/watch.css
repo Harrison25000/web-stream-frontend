@@ -1,8 +1,14 @@
 .WatchPage {
     position: relative;
-    display: block;
+    display: flex;
     margin: auto;
     text-align: center;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-content: center;
+    justify-content: center;
+    align-items: flex-start;
+    margin-top: 2%;
 }
 
 .WatchPageTitleDiv {

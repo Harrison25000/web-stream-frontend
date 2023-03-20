@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
-import { getNumberOfwatchers, getSocket, addWatcher, removeWatcher } from '../Helpers';
+import { getNumberOfwatchers, getSocket, addWatcher, removeWatcher, getComments } from '../Helpers';
 import '../css/watch.css';
 import '../css/video.css';
+import Comments from '../components/Comments';
 
 const Watch = () => {
 
@@ -94,40 +95,47 @@ const Watch = () => {
     };
 
     return (
-        <div className="WatchPage">
+        <>
             <div className='WatchPageTitleDiv'>
                 <p id='watchTitleText'>Watch Page</p>
                 <p id='watchTitleCount'> Number of viewers: {numberOfWatchers}</p>
             </div>
-            <video id="videoStream" playsInline autoPlay>
-            </video>
-            <div className='VideoButtons'>
-                <button
-                    onClick={() => {
-                        if (!startWatching) {
-                            addWatcher();
-                            setNumberOfWatchers(numberOfWatchers + 1)
-                            setStartWatching(true)
-                        }
-                    }}
-                    className="Button"
-                >
-                    <p id="playButtonText">&#8895;</p>
-                </button>
-                <button
-                    onClick={() => {
-                        if (startWatching) {
-                            removeWatcher();
-                            setNumberOfWatchers(numberOfWatchers - 1)
-                            setStartWatching(false)
-                        }
-                    }}
-                    className="Button"
-                >II
-                </button>
-            </div>
+            <div className="WatchPage">
+                <div className='WatchVideoSection'>
+                    <video id="videoStream" playsInline autoPlay>
+                    </video>
+                    <div className='VideoButtons'>
+                        <button
+                            onClick={() => {
+                                if (!startWatching) {
+                                    addWatcher();
+                                    setNumberOfWatchers(numberOfWatchers + 1)
+                                    setStartWatching(true)
+                                }
+                            }}
+                            className="Button"
+                        >
+                            <p id="playButtonText">&#8895;</p>
+                        </button>
+                        <button
+                            onClick={() => {
+                                if (startWatching) {
+                                    removeWatcher();
+                                    setNumberOfWatchers(numberOfWatchers - 1)
+                                    setStartWatching(false)
+                                }
+                            }}
+                            className="Button"
+                        >II
+                        </button>
+                    </div>
+                </div>
+                <div className='CommentVideoSection'>
+                    <Comments />
+                </div>
 
-        </div >
+            </div >
+        </>
     )
 }
 

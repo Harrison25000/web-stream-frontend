@@ -1,5 +1,5 @@
 #videoStream {
-    width: 50%;
+    width: 75%;
     border: solid red;
 }
 
@@ -23,4 +23,12 @@
 #playButtonText {
     transform: rotate(-45deg);
     margin-right: 50%;
+}
+
+.WatchVideoSection {
+    width: 100%;
+}
+
+.CommentVideoSection {
+    width: 50%;
 }
