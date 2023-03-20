@@ -1,15 +1,22 @@
 import { useEffect, useState } from 'react';
-import { io } from "socket.io-client";
+import { getNumberOfwatchers, getSocket, addWatcher, removeWatcher } from '../Helpers';
+import '../css/watch.css';
+import '../css/video.css';
 
-const Watch = ({ socket }) => {
+const Watch = () => {
 
     const [startWatching, setStartWatching] = useState(false);
+    const [numberOfWatchers, setNumberOfWatchers] = useState(0);
+
+    useEffect(() => {
+        getNumberOfwatchers().then(count => setNumberOfWatchers(count));
+    }, [])
 
     useEffect(() => {
         initialiseWatching();
     }, [startWatching])
 
-    const initialiseWatching = () => {
+    const initialiseWatching = async () => {
         let peerConnection;
         const config = {
             iceServers: [
@@ -26,11 +33,7 @@ const Watch = ({ socket }) => {
 
         const video = document.querySelector("video");
 
-        if (window.location.host.includes("localhost")) {
-            var socket = io.connect('localhost:4000', { reconnect: true });
-        } else {
-            var socket = io.connect('https://web-stream-backend.herokuapp.com/', { reconnect: true });
-        }
+        const socket = await getSocket();
 
         socket.on("offer", (id, description) => {
             peerConnection = new RTCPeerConnection(config);
@@ -59,7 +62,7 @@ const Watch = ({ socket }) => {
                 .catch(e => console.error(e));
         });
 
-        socket.on("connect", () => {
+        socket.on("connect", async () => {
             socket.emit("watcher");
         });
 
@@ -67,25 +70,64 @@ const Watch = ({ socket }) => {
             socket.emit("watcher");
         });
 
-        console.log({ socket });
         window.onunload = window.onbeforeunload = () => {
             socket.close();
             peerConnection.close();
+            removeWatcher();
         };
 
+        if (!startWatching) {
+            socket.close();
+            video.pause();
+        }
+
         function enableAudio() {
-            console.log("Enabling audio")
             video.muted = false;
         }
     }
 
+    window.onunload = () => {
+        if (startWatching) {
+            removeWatcher();
+            setStartWatching(false);
+        }
+    };
+
     return (
-        <div>
-            <h1 id="title">Watch Page</h1>
+        <div className="WatchPage">
+            <div className='WatchPageTitleDiv'>
+                <p id='watchTitleText'>Watch Page</p>
+                <p id='watchTitleCount'> Number of viewers: {numberOfWatchers}</p>
+            </div>
             <video id="videoStream" playsInline autoPlay>
             </video>
-            <button onClick={() => setStartWatching(true)}>Start Watching?</button>
-        </div>
+            <div className='VideoButtons'>
+                <button
+                    onClick={() => {
+                        if (!startWatching) {
+                            addWatcher();
+                            setNumberOfWatchers(numberOfWatchers + 1)
+                            setStartWatching(true)
+                        }
+                    }}
+                    className="Button"
+                >
+                    <p id="playButtonText">&#8895;</p>
+                </button>
+                <button
+                    onClick={() => {
+                        if (startWatching) {
+                            removeWatcher();
+                            setNumberOfWatchers(numberOfWatchers - 1)
+                            setStartWatching(false)
+                        }
+                    }}
+                    className="Button"
+                >II
+                </button>
+            </div>
+
+        </div >
     )
 }
 

@@ -1,0 +1,18 @@
+.WatchPage {
+    position: relative;
+    display: block;
+    margin: auto;
+    text-align: center;
+}
+
+.WatchPageTitleDiv {
+    margin: auto;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-content: center;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 30px;
+    width: 50%;
+}

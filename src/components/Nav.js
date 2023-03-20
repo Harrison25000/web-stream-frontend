@@ -1,13 +1,11 @@
-import '../css/Nav.css';
+import '../css/nav.css';
 
 function Nav() {
     return (
         <div className="App">
-            <header className="App-header">
-                <div className="NavBar">
-                    <h1>Web Stream</h1>
-                </div>
-            </header>
+            <div className="NavBar">
+                <h1 id="navTitle" onClick={() => window.location.href = "/"}>Web Stream</h1>
+            </div>
         </div>
     );
 }

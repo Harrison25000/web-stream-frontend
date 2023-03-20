@@ -1,14 +1,22 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { io } from "socket.io-client";
+import '../css/video.css';
+import '../css/broadcast.css';
+import { getNumberOfwatchers, getSocket } from '../Helpers';
 
 const Broadcast = () => {
 
+    const [numberOfWatchers, setNumberOfWatchers] = useState(0);
+
+    setInterval(function () {
+        getNumberOfwatchers().then(count => setNumberOfWatchers(count));
+    }, 20000)
+
     useEffect(() => {
-        console.log("Broadcasting")
         initialiseStream();
     }, [])
 
-    const initialiseStream = () => {
+    const initialiseStream = async () => {
         const peerConnections = {};
         const config = {
             iceServers: [
@@ -23,13 +31,7 @@ const Broadcast = () => {
             ]
         };
 
-        if (window.location.host.includes("localhost")) {
-            var socket = io.connect('localhost:4000', { reconnect: true });
-        } else {
-            var socket = io.connect('https://web-stream-backend.herokuapp.com/', { reconnect: true });
-        }
-
-        console.log({ "on": socket.on() })
+        const socket = await getSocket();
 
         socket.on("answer", (id, description) => {
             peerConnections[id].setRemoteDescription(description);
@@ -57,26 +59,25 @@ const Broadcast = () => {
                 });
 
             peerConnection.oniceconnectionstatechange = function () {
-                console.log('ICE state: ', peerConnection.iceConnectionState);
+                // console.log('ICE state: ', peerConnection.iceConnectionState);
             }
         });
 
         socket.on("candidate", (id, candidate) => {
             peerConnections[id].addIceCandidate(new RTCIceCandidate(candidate));
             peerConnections[id].oniceconnectionstatechange = function () {
-                console.log('ICE state: ', peerConnections[id].iceConnectionState);
+                // console.log('ICE state: ', peerConnections[id].iceConnectionState);
             }
         });
 
         socket.on("disconnectPeer", id => {
             peerConnections[id].close();
             peerConnections[id].oniceconnectionstatechange = function () {
-                console.log('ICE state: ', peerConnections[id].iceConnectionState);
+                // console.log('ICE state: ', peerConnections[id].iceConnectionState);
             }
             delete peerConnections[id];
         });
 
-        console.log({ socket });
 
         window.onunload = window.onbeforeunload = () => {
             socket.close();
@@ -146,19 +147,24 @@ const Broadcast = () => {
     }
 
     return (
-        <div>
-            <h1>Broadcast Page</h1>
-            <section className="select">
-                <label for="audioSource">Audio source: </label>
-                <select id="audioSource"></select>
-            </section>
+        <div className="BroadcastPage">
+            <div className='BroadcastPageTitleDiv'>
+                <p id='broadcastTitleText'>Broadcast Page</p>
+                <p id='broadcastTitleCount'> Number of viewers: {numberOfWatchers}</p>
+            </div>
+            <div className="BroadcastAVSelections">
+                <section className="select">
+                    <label for="audioSource">Audio source: </label>
+                    <select id="audioSource"></select>
+                </section>
 
-            <section className="select">
-                <label htmlFor="videoSource">Video source: </label>
-                <select id="videoSource"></select>
-            </section>
+                <section className="select">
+                    <label htmlFor="videoSource">Video source: </label>
+                    <select id="videoSource"></select>
+                </section>
+            </div>
 
-            <video playsInline autoPlay muted></video>
+            <video id="videoStream" playsInline autoPlay muted></video>
         </div>
     )
 }

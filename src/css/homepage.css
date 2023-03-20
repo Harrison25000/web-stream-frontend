@@ -1,0 +1,37 @@
+.HomepageDiv {
+    display: flex;
+    width: 80%;
+    height: auto;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-content: center;
+    justify-content: space-around;
+    align-items: center;
+    margin: 2% auto;
+}
+
+.HomepageTab {
+    height: 250px;
+    width: 250px;
+    border: solid black;
+    cursor: pointer;
+}
+
+.HomepageTab:Hover {
+    box-shadow: -1px 1px 8px 3px rgba(0, 0, 0, 0.75);
+}
+
+#watchIconImage,
+#broadcastIconImage {
+    display: block;
+    height: 200px;
+    width: 200px;
+    margin: auto;
+}
+
+#watchTabTitle,
+#broadcastTabTitle {
+    display: block;
+    margin: auto;
+    text-align: center;
+}

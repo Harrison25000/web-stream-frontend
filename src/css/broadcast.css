@@ -1,0 +1,29 @@
+.BroadcastPage {
+    position: relative;
+    display: block;
+    margin: auto;
+    text-align: center;
+}
+
+.BroadcastPageTitleDiv {
+    margin: auto;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-content: center;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 30px;
+    width: 50%;
+}
+
+.BroadcastAVSelections {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-content: center;
+    align-items: flex-start;
+    justify-content: center;
+    width: 50%;
+    margin: auto;
+}
