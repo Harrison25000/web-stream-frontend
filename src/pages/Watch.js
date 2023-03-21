@@ -112,6 +112,7 @@ const Watch = () => {
                         </video>
                         <div className='VideoButtons'>
                             <button
+                                title="Play"
                                 onClick={() => {
                                     if (!startWatching) {
                                         addWatcher();
@@ -124,6 +125,7 @@ const Watch = () => {
                                 <p id="playButtonText">&#8895;</p>
                             </button>
                             <button
+                                title="Pause"
                                 onClick={() => {
                                     if (startWatching) {
                                         removeWatcher();
@@ -135,6 +137,7 @@ const Watch = () => {
                             >II
                             </button>
                             <button
+                                title="Mute"
                                 onClick={() => {
                                     setMute(!mute);
                                 }}
