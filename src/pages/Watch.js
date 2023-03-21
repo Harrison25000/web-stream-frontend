@@ -10,6 +10,7 @@ const Watch = () => {
     const [startWatching, setStartWatching] = useState(false);
     const [numberOfWatchers, setNumberOfWatchers] = useState(0);
     const [availableBroadcast, setAvailableBroadcast] = useState(false);
+    const [mute, setMute] = useState(false);
 
     useEffect(() => {
         getNumberOfwatchers().then(count => setNumberOfWatchers(count));
@@ -107,7 +108,7 @@ const Watch = () => {
             <div className="WatchPage">
                 <div className='WatchVideoSection'>
                     <div className="WatchVideoSubSection">
-                        <video id="videoStream" poster={watchMessage} playsInline autoPlay>
+                        <video id="videoStream" poster={watchMessage} playsInline autoPlay muted={mute}>
                         </video>
                         <div className='VideoButtons'>
                             <button
@@ -132,6 +133,13 @@ const Watch = () => {
                                 }}
                                 className="Button"
                             >II
+                            </button>
+                            <button
+                                onClick={() => {
+                                    setMute(!mute);
+                                }}
+                                className={`Button ${!mute ? 'fas fa-volume-mute' : 'fas fa-volume-up'}`}
+                            >
                             </button>
                             <p id='numberOfViewers' style={{ textAlign: "right" }}> Number of viewers: {numberOfWatchers}</p>
                         </div>
