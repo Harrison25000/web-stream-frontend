@@ -3,6 +3,7 @@ import '../css/video.css';
 import '../css/broadcast.css';
 import { getNumberOfwatchers, getSocket } from '../Helpers';
 import Comments from '../components/Comments';
+import broadcastMessage from '../images/broadcastMessage.png';
 
 const Broadcast = () => {
 
@@ -13,7 +14,7 @@ const Broadcast = () => {
     }, 20000)
 
     useEffect(() => {
-        initialiseStream();
+        getNumberOfwatchers().then(count => setNumberOfWatchers(count));
     }, [])
 
     const initialiseStream = async () => {
@@ -28,6 +29,7 @@ const Broadcast = () => {
                 //   "username": "TURN_USERNAME",
                 //   "credential": "TURN_CREDENTIALS"
                 // }
+                // Interactive Connectivity Establishment (ICE) is a standard for using STUN and TURN to establish connectivity between two endpoints
             ]
         };
 
@@ -154,7 +156,7 @@ const Broadcast = () => {
             <div className="BroadcastPage">
                 <div className="WatchVideoSection">
                     <div className="WatchVideoSubSection">
-                        <video id="videoStream" playsInline autoPlay muted></video>
+                        <video onClick={() => initialiseStream()} poster={broadcastMessage} id="videoStream" playsInline autoPlay muted></video>
                         <div className="BroadcastAVSelections">
                             <section className="select">
                                 <label for="audioSource">Audio source: </label>

@@ -93,7 +93,7 @@ const Watch = () => {
         }
     }
 
-    window.onunload = () => {
+    window.onunload = window.onbeforeunload = () => {
         if (startWatching) {
             removeWatcher();
             setStartWatching(false);
