@@ -1,3 +1,11 @@
+.HomepageText {
+    display: block;
+    margin: auto;
+    width: 60%;
+    padding: 3%;
+    text-align: center;
+}
+
 .HomepageDiv {
     display: flex;
     width: 80%;
